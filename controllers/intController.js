@@ -1,21 +1,15 @@
-
-const connection = require('../connection/dbConnection')
-const controller = {}
+const connection = require('../connection/dbConnection.js')
 
 
-controller.list = (req,res) => {
-connection.query((err, conn) => { 
-    consultaSQL = 'SELECT * FROM user';
-    conn.query(consultaSQL, (err, resultados)=>{
-        if(err){
-            console.error('Error al ejecutar la consulta: ', err.stack);
-            return;
-        }
-        console.log('Resultados de la consulta: ', resultados);
-    })
-});
-res.json(resultados)
+consultaSQL = 'SELECT * FROM user';
+const hola = connection.query(consultaSQL, (err, resultados) => {
+  if (err) {
+    console.error('Error al ejecutar la consulta: ', err.stack);
+    return;
+  }
+  console.log('Resultados de la consulta: ', resultados);
+}
+);
 
-};
 
-module.exports = controller;
+module.exports = hola;

@@ -1,9 +1,15 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
+const app = express();
 
-const intController = require('../controllers/intController.js')
+app.use(express.json());
 
 
-router.get('/', intController.list)
+const hola = require('../controllers/intController.js');
+
+
+app.get('/',(req, res) => res.status(200).json({
+    hola
+}) );
 
 module.exports = router;
