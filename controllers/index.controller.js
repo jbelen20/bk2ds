@@ -8,7 +8,7 @@ const user  = (req,res)=>{
         console.error('Error al ejecutar la consulta: ', err.stack);
         return;
       }
-      console.log(resultados)
+      // console.log(resultados)
       res.status(200).send(resultados);
     }
   )
