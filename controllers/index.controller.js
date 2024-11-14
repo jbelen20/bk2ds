@@ -1,6 +1,10 @@
 const connection = require('../connection/dbConnection.js')
 
 
+//user---------------------------------------
+
+
+
 // get users
 const user  = (req,res)=>{
   consultaSQL = 'SELECT * FROM user';
@@ -9,24 +13,54 @@ const user  = (req,res)=>{
         console.error('Error al ejecutar la consulta: ', err.stack);
         return;
       }
-      console.log(req.params)
       res.status(200).send(resultados);
     }
   )
-}
+};
+
+
 
 // get a user
+const oneUser = async (req, res)=>{
+  const userId = req.params.id
+  const consultaUser = 'SELECT * FROM user WHERE id = ?'
+  connection.query(consultaUser,[userId], (err, results) => {
+    if (err) {
+      return res.status(500).send('Error en la consulta de la base de datos');
+    }
+    if (results.length === 0) {
+      return res.status(404).send('Usuario no encontrado');
+    }
 
-// post user
+    return res.json(results[0]);
+  }
+)
 
-const createUser = (req, res)=>{
-  res.send('buliding user is loading...')
 }
 
+
+
+// post user
+const createUser = (req, res)=>{
+  const datos = req.body;
+  console.log('Datos recibidos:', datos);
+  if (!datos) {
+      return res.status(400).json({ mensaje: 'No se han enviado datos' });
+    }
+
+  res.status(200).json({
+    mensaje: 'Datos recibidos correctamente',
+    datosRecibidos: datos
+  });
+
+}
+
+//user fin---------------------------------------
 
   
   
 module.exports = {
   user,
+  oneUser,
   createUser
 };

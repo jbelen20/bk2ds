@@ -4,12 +4,14 @@ const controllerIndex = require('../controllers/index.controller.js')
 
 //constrolls
 const user = controllerIndex.user
+const oneUser = controllerIndex.oneUser
 const createUser = controllerIndex.createUser
 
-
-
+//get all users
 router.get('/',user);
-
-router.post('/', createUser );
+//get one user
+router.get("/:id", oneUser)
+//post user
+router.post('/create', createUser);
 
 module.exports = router;
