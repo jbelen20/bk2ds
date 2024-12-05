@@ -42,18 +42,23 @@ const oneUser = async (req, res)=>{
 
 // post user
 const createUser = (req, res)=>{
-  const datos = req.body;
-  console.log('Datos recibidos:', datos);
-  if (!datos) {
-      return res.status(400).json({ mensaje: 'No se han enviado datos' });
+  const { name, lastname, email, phone, password } = req.body;
+ 
+  const queryCreateUser = 'INSERT INTO user (name, lastname, email, phone, password) VALUES (?, ?, ?, ?, ?)'
+ 
+  connection.query(queryCreateUser, [name, lastname, email, phone, password ], (err, result) => {
+    if (err) {
+      console.error('Error al insertar el usuario:', err);
+      return res.status(500).send('Error al insertar el usuario');
     }
 
-  res.status(200).json({
-    mensaje: 'Datos recibidos correctamente',
-    datosRecibidos: datos
+    res.status(201).json({
+      id: result.insertId, 
+      name, lastname, email, phone, password 
+    });
   });
-
 }
+
 
 //user fin---------------------------------------
 

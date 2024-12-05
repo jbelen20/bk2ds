@@ -8,9 +8,9 @@ const oneUser = controllerIndex.oneUser
 const createUser = controllerIndex.createUser
 
 //get all users
-router.get('/',user);
+router.get('/users',user);
 //get one user
-router.get("/:id", oneUser)
+router.get("/users/:id", oneUser)
 //post user
 router.post('/create', createUser);
 
