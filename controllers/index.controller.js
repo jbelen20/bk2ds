@@ -52,7 +52,7 @@ const createUser = (req, res)=>{
       return res.status(500).send('Error al insertar el usuario');
     }
 
-    res.status(201).json({
+    return res.status(201).json({
       id: result.insertId, 
       name, lastname, email, phone, password 
     });
@@ -62,10 +62,25 @@ const createUser = (req, res)=>{
 
 //user fin---------------------------------------
 
+//get products-----------------------------------
+
+const productsCategory  = (req,res)=>{
+  consultaCategorys = 'SELECT * FROM productsCategory';
+  connection.query(consultaCategorys, (err, resultados) => {
+      if (err) {
+        console.error('Error al ejecutar la consulta: ', err.stack);
+        return;
+      }
+      res.status(200).send(resultados);
+    }
+  )
+};
+
   
   
 module.exports = {
   user,
   oneUser,
-  createUser
+  createUser,
+  productsCategory
 };
