@@ -7,6 +7,11 @@ const user = controllerIndex.user
 const oneUser = controllerIndex.oneUser
 const createUser = controllerIndex.createUser
 const productsCategory = controllerIndex.productsCategory
+const chocolatesCategory = controllerIndex.chocolatesCategory
+const donasCategory = controllerIndex.donasCategory 
+const panCategory = controllerIndex.panCategory 
+const tortasCategory = controllerIndex.tortasCategory 
+
 
 //get all users
 router.get('/users',user);
@@ -17,7 +22,10 @@ router.post('/create', createUser);
 
 //get productsCategory
 router.get('/categorys', productsCategory);
-
-//get aProduct
+//get aProduct 
+router.get('/categorys/chocolates', chocolatesCategory);
+router.get('/categorys/donas', donasCategory);
+router.get('/categorys/pan', panCategory);
+router.get('/categorys/tortas', tortasCategory);
 
 module.exports = router;

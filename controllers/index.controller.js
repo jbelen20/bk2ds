@@ -76,11 +76,69 @@ const productsCategory  = (req,res)=>{
   )
 };
 
+//get a chocolatesProducts
+const chocolatesCategory  = (req,res)=>{
+  chocolatesCategorysQuery = 'SELECT * FROM chocolates';
+  connection.query(chocolatesCategorysQuery, (err, resultados) => {
+      if (err) {
+        console.error('Error al ejecutar la consulta: ', err.stack);
+        return;
+      }
+      res.status(200).send(resultados);
+    }
+  )
+};
+
+
+const donasCategory  = (req,res)=>{
+  donasCategorysQuery = 'SELECT * FROM donas';
+  connection.query(donasCategorysQuery, (err, resultados) => {
+      if (err) {
+        console.error('Error al ejecutar la consulta: ', err.stack);
+        return;
+      }
+      res.status(200).send(resultados);
+    }
+  )
+};
+
+const panCategory  = (req,res)=>{
+  panCategorysQuery = 'SELECT * FROM pan';
+  connection.query(panCategorysQuery, (err, resultados) => {
+      if (err) {
+        console.error('Error al ejecutar la consulta: ', err.stack);
+        return;
+      }
+      console.log(resultados, 'back')
+      res.status(200).send(resultados);
+    }
+  )
+};
+
+
+const tortasCategory  = (req,res)=>{
+  tortasCategorysQuery = 'SELECT * FROM tortas';
+  connection.query(tortasCategorysQuery, (err, resultados) => {
+      if (err) {
+        console.error('Error al ejecutar la consulta: ', err.stack);
+        return;
+      }
+      console.log(resultados, 'back')
+      res.status(200).send(resultados);
+    }
+  )
+};
+
+
   
   
 module.exports = {
   user,
   oneUser,
   createUser,
-  productsCategory
+  productsCategory,
+  chocolatesCategory,
+  donasCategory,
+  panCategory,
+  tortasCategory
 };
