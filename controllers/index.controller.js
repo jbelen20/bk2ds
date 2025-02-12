@@ -1,4 +1,6 @@
 const connection = require('../connection/dbConnection.js')
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 
 //user---------------------------------------
@@ -129,7 +131,46 @@ const tortasCategory  = (req,res)=>{
   )
 };
 
+const users = [];
 
+const register = async (req, res) => {
+  const { username, password } = req.body;
+
+  // Hashear contraseña
+  const hashedPassword = await bcrypt.hash(password, 10);
+  users.push({ username, password: hashedPassword });
+
+  res.json({ message: "Usuario registrado" });
+}
+
+
+const login = async (req, res) => {
+  const { username, password } = req.body;
+  const user = users.find(user => user.username === username);
+
+  if (!user) return res.status(400).json({ error: "Usuario no encontrado" });
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) return res.status(400).json({ error: "Contraseña incorrecta" });
+
+  // Generar token
+  const token = jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn: "1h" });
+
+  res.json({ token });
+}
+
+function verifyToken(req, res, next) {
+  const token = req.header("Authorization");
+  if (!token) return res.status(401).json({ error: "Acceso denegado" });
+
+  try {
+      const verified = jwt.verify(token.replace("Bearer ", ""), process.env.JWT_SECRET);
+      req.user = verified;
+      next();
+  } catch (err) {
+      res.status(400).json({ error: "Token inválido" });
+  }
+}
   
   
 module.exports = {
@@ -140,5 +181,8 @@ module.exports = {
   chocolatesCategory,
   donasCategory,
   panCategory,
-  tortasCategory
+  tortasCategory,
+  register,
+  login,
+  verifyToken
 };

@@ -12,6 +12,11 @@ const donasCategory = controllerIndex.donasCategory
 const panCategory = controllerIndex.panCategory 
 const tortasCategory = controllerIndex.tortasCategory 
 
+//jwt
+const register = controllerIndex.register
+const login = controllerIndex.login
+const verifyToken = controllerIndex.verifyToken
+
 
 //get all users
 router.get('/users',user);
@@ -27,5 +32,12 @@ router.get('/categorys/chocolates', chocolatesCategory);
 router.get('/categorys/donas', donasCategory);
 router.get('/categorys/pan', panCategory);
 router.get('/categorys/tortas', tortasCategory);
+
+//jwt
+router.post('/register', register);
+router.post('/login', login);
+router.get("/dashboard", verifyToken, (req, res) => {
+    res.json({ message: `Bienvenido ${req.user.username}!` });
+});
 
 module.exports = router;
